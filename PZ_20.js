@@ -409,6 +409,28 @@ $(function () {
             $("#td-f6-" + j).text(weatherForecast.arrTr6[j - 2]);
         } 
     }
+    function getForecastDay(index){
+        if (index == 1)
+        {
+            console.log("---Working1---");
+        }
+        else if (index == 2)
+        {
+            console.log("---Working2---");
+        }
+        else if (index == 3)
+        {
+            console.log("---Working3---");
+        }
+        else if (index == 4)
+        {
+            console.log("---Working4---");
+        }
+        else if (index == 5)
+        {
+            console.log("---Working5---");
+        }
+    }
     function letsBegin(){ // функция заполнения основных вкладок
         $("<div id='mainHead'>").appendTo("body"); // основной див для заголовка
         $("<div id='mainHeadDiv1'>").appendTo("#mainHead"); // Заголовок My Weather
@@ -469,8 +491,6 @@ $(function () {
         $("<div id='today_head_row_2_col_3_sunset'>").appendTo("#today_head_row_2_col_3_2"); // закат
         $("<div id='today_head_row_2_col_3_duration'>").appendTo("#today_head_row_2_col_3_2"); // продолжительность дня надо рассчитать
         
-        
-                
         $("<div id='today_main'>").appendTo("#today-1");
         $("<div id='today_main_hourly'>").appendTo("#today_main"); // заголовок hourly
         $("#today_main_hourly").text("Hourly");
@@ -509,14 +529,19 @@ $(function () {
         $("<div id='fiveDay_forecast'>").appendTo("#fiveDay_main"); // основной див для вкладки для пяти дней
 
         for (let i = 1;i <= 5; i++){
-            $("<div id='day_" + i +"'>").appendTo("#fiveDay_forecast"); // формируем див для всего дня
+            // $("<div id='day_" + i +"'>").appendTo("#fiveDay_forecast"); // формируем див для всего дня
+            $("<div>",
+            {
+                id: "day_" + i,
+                click: function(){getForecastDay(i)}
+            }).appendTo("#fiveDay_forecast"); // формируем див для всего дня
             $("<div id='day_" + i +"_head'>").appendTo("#day_"+ i); // формируем див для заголовка
             $("<div id='day_" + i +"_date'>").appendTo("#day_"+ i); // формируем див для даты
             $("<div id='day_" + i +"_icon'>").appendTo("#day_"+ i); // формируем див для картинки
             $("<div id='day_" + i +"_temp'>").appendTo("#day_"+ i); // формируем див для температуры
             $("<div id='day_" + i +"_descript'>").appendTo("#day_"+ i); // формируем див для описания
         }
-        
+
         $("<div id='fiveDay_main_hourly'>").appendTo("#fiveDay_main"); // заголовок hourly во вкладке 5day forecast
         $("#fiveDay_main_hourly").text("Hourly");
         $("<table id='fiveDay_main_table'>").appendTo("#fiveDay_main"); // вставка таблицы в hourly во вкладке 5day forecast
