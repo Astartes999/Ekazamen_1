@@ -1,0 +1,190 @@
+#mainHead
+{
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+    height: 100px;
+    border-radius: 10px;
+    background-color: khaki;
+    align-items: center;
+    margin-bottom: 10px;
+}
+#mainHeadDiv1
+{
+    font-size: 45px;
+    font-weight: bold;
+    color: darkseagreen;
+    padding: 7px;
+}
+#mainHeadDiv2
+{
+    display: flex;
+    padding: 7px;
+    align-items: center;
+}
+#mainHeadSearch
+{
+    padding: 19px;
+    font-size: 20px;
+}
+#vkladki
+{
+    display: flex;
+    width: 100%;
+    height: 50px;
+    color: white;
+}
+#vkladka-1
+{
+    background-color: rosybrown;
+    border-radius: 10px;
+    width: 200px;
+    height: 50px;
+    text-align: center;
+    font-size: 30px;
+}
+#vkladka-2
+{
+    background-color: #D17A9E;
+    border-radius: 10px;
+    width: 200px;
+    height: 50px;
+    text-align: center;
+    font-size: 30px;
+}
+#today-1, #fiveDay-2, #today_main_table, #fiveDay_forecast, #fiveDay_main_table
+{
+    width: 100%;
+}
+.menu.active
+{
+background-color: #999;
+color: white;
+border: 1px solid white;
+}
+.content
+{
+display: none;
+}
+#today_head_row_1
+{
+    border-radius: 10px;
+    background-color: khaki;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 10px;
+    margin-top: 10px;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-size: 20px;
+    color: #3B226D;
+}
+#today_head_row_2
+{
+    border-radius: 10px;
+    background-color: khaki;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+    padding: 10px;
+    margin-top: 5px;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-size: 20px;
+}
+#today_head_row_2_col_2_temp
+{
+    font-size: 55px;
+    text-align: center;
+}
+#today_head_row_2_col_2_temp_max, #today_head_row_2_col_1_icon, #today_head_row_2_col_1_description 
+{
+    text-align: center;
+}
+#today_head_row_2_col_1, #today_head_row_2_col_3
+{
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+}
+#today_head_row_2_col_3_sunrise, #today_head_row_2_col_3_sunset, #today_head_row_2_col_3_duration, #today_head_row_2_col_3_sunrise_text, #today_head_row_2_col_3_sunset_text, #today_head_row_2_col_3_duration_text
+{
+    margin: 5px;
+}
+#today_head_row_2_col_3
+{
+    display: flex;
+    flex-direction: row;
+}
+#today_main_hourly, #today_main_table, #today_main_nearby_label, #fiveDay_forecast, #fiveDay_main_table
+{
+    color: #3B226D;
+    border-radius: 10px;
+    background-color: khaki;
+    padding: 10px;
+    margin-top: 5px;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-size: 20px;
+}
+td
+{
+    margin-top: 5px;
+    margin-right: 10px;
+    text-align: center;
+    color: black;
+}
+#today_main_nearby_table, #today_main_nearby_col1_1, #today_main_nearby_col1_2, #today_main_nearby_col2_1, #today_main_nearby_col2_2
+{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    background-color: khaki;
+    border-radius: 10px;
+    padding: 10px;
+    margin-top: 5px;
+    font-size: 20px;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+#today_main_nearby_col1, #today_main_nearby_col2
+{
+    display: flex;
+    flex-direction: column;
+}
+#icon_town1, #icon_town2, #icon_town3, #icon_town4
+{
+    width: auto;
+    height: auto;
+    max-width: 50px;
+    max-height: 50px;
+}
+#mistake404
+{
+    width: 100%;
+    height: 500px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    font-size: 50px;
+    color: blue;
+    background-color: #999;
+}
+#fiveDay_forecast
+{
+    display: flex;
+    flex-basis: 20%;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+#day_1, #day_2, #day_3, #day_4, #day_5
+{
+    display: flex;
+    flex-direction: column;
+    width: 20%;
+    align-items: center;
+}
+#day_1:hover
+{
+    background-color: rgb(180, 176, 138);
+}
