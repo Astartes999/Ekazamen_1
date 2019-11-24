@@ -277,16 +277,16 @@ $(function () {
         $(".menu.active").removeClass("active"); // удаляем активный класс, чтобы работало по клику то меню из которого был введен поиск, иначе оно не работает
     }
     function makeNewCall(){ // функция по клику кнопки zoom
-            makeAPICall("http://api.openweathermap.org/data/2.5/weather?&q=" + $("#mainHeadSearch").val() + "&units=Metric&lang=ru&appid=" + ACCESS_KEY, "current"); // вызываем запрос для отображения текущей погоды нового города
-            makeAPICall("http://api.openweathermap.org/data/2.5/weather?&q=" + $("#mainHeadSearch").val() + "&units=Metric&lang=ru&appid=" + ACCESS_KEY, "current_new"); // снова вызываем, лишь для того, чтобы вытащить координаты нового города для nearby
+            makeAPICall("http://api.openweathermap.org/data/2.5/weather?&q=" + $("#mainHeadSearch").val() + "&units=Metric&lang=ru&appid=" + ACCESS_KEY, "current", "0"); // вызываем запрос для отображения текущей погоды нового города
+            makeAPICall("http://api.openweathermap.org/data/2.5/weather?&q=" + $("#mainHeadSearch").val() + "&units=Metric&lang=ru&appid=" + ACCESS_KEY, "current_new", "0"); // снова вызываем, лишь для того, чтобы вытащить координаты нового города для nearby
     }
     function createAPI3(response){ // функция апи для передачи координат города
         let lon = response.coord.lon;
         let lat = response.coord.lat;
-        makeAPICall("http://api.openweathermap.org/data/2.5/find?lat=" + lat + "&lon=" + lon  + "&units=Metric&cnt=5&appid=" + ACCESS_KEY, "nearby");
-        makeAPICall("http://api.openweathermap.org/data/2.5/forecast?lat=" + lat + "&lon=" + lon + "&units=Metric&appid=" + ACCESS_KEY, "forecast_new");
+        makeAPICall("http://api.openweathermap.org/data/2.5/find?lat=" + lat + "&lon=" + lon  + "&units=Metric&cnt=5&appid=" + ACCESS_KEY, "nearby", "0");
+        makeAPICall("http://api.openweathermap.org/data/2.5/forecast?lat=" + lat + "&lon=" + lon + "&units=Metric&appid=" + ACCESS_KEY, "forecast_new", "0");
     }
-    function createAPI4(response){ // функция апи для отображения погоды в nearby
+    function createAPI4(response, probe){ // функция апи для отображения погоды в nearby
         const weatherForecast =
         {
             countOfTd: kolvoTd(), 
@@ -394,43 +394,78 @@ $(function () {
             else if ((deg >= 300) && (deg <= 330)) { return "NW" }
             else if ((deg > 330) && (deg < 345)) { return "NNW" }
         }
-        for (let j = 2; j <= weatherForecast.countOfTd + 1; j++) {
-            $("#td-1-" + j).text(weatherForecast.arrTr1[j - 2]); // вывод строки с часами до конца дня
-            $("#td-f1-" + j).text(weatherForecast.arrTr1[j - 2]); // вывод строки с часами до конца дня
-            $("#img_icon_we" + (j-2)).attr("src", weatherForecast.arrTr2[j - 2]); // вывод строки с картинками
-            $("#img_icon_wef" + (j-2)).attr("src", weatherForecast.arrTr2[j - 2]); // вывод строки с картинками
-            $("#td-3-" + j).text(weatherForecast.arrTr3[j - 2]);
-            $("#td-f3-" + j).text(weatherForecast.arrTr3[j - 2]);
-            $("#td-4-" + j).text(weatherForecast.arrTr4[j - 2]);
-            $("#td-f4-" + j).text(weatherForecast.arrTr4[j - 2]);
-            $("#td-5-" + j).text(weatherForecast.arrTr5[j - 2]);
-            $("#td-f5-" + j).text(weatherForecast.arrTr5[j - 2]);
-            $("#td-6-" + j).text(weatherForecast.arrTr6[j - 2]);
-            $("#td-f6-" + j).text(weatherForecast.arrTr6[j - 2]);
-        } 
+        if (probe == "zero"){
+            for (let j = 2; j <= weatherForecast.countOfTd + 1; j++) {
+                $("#td-1-" + j).text(weatherForecast.arrTr1[j - 2]); // вывод строки с часами до конца дня
+                $("#td-f1-" + j).text(weatherForecast.arrTr1[j - 2]); // вывод строки с часами до конца дня
+                $("#img_icon_we" + (j-2)).attr("src", weatherForecast.arrTr2[j - 2]); // вывод строки с картинками
+                $("#img_icon_wef" + (j-2)).attr("src", weatherForecast.arrTr2[j - 2]); // вывод строки с картинками
+                $("#td-3-" + j).text(weatherForecast.arrTr3[j - 2]);
+                $("#td-f3-" + j).text(weatherForecast.arrTr3[j - 2]);
+                $("#td-4-" + j).text(weatherForecast.arrTr4[j - 2]);
+                $("#td-f4-" + j).text(weatherForecast.arrTr4[j - 2]);
+                $("#td-5-" + j).text(weatherForecast.arrTr5[j - 2]);
+                $("#td-f5-" + j).text(weatherForecast.arrTr5[j - 2]);
+                $("#td-6-" + j).text(weatherForecast.arrTr6[j - 2]);
+                $("#td-f6-" + j).text(weatherForecast.arrTr6[j - 2]);
+            }
+        }
+        if (probe == "one"){
+            for (let j = 2; j <= weatherForecast.countOfTd + 1; j++) {
+                $("#td-f1-" + j).text(getDateAPI(new Date(response.list[j-2].dt * 1000), "hour")); // вывод строки с часами до конца дня
+                $("#img_icon_wef" + (j-2)).attr("src", weatherForecast.arrTr2[j - 2]); // вывод строки с картинками
+                $("#td-f3-" + j).text(weatherForecast.arrTr3[j - 2]);
+                $("#td-f4-" + j).text(weatherForecast.arrTr4[j - 2]);
+                $("#td-f5-" + j).text(weatherForecast.arrTr5[j - 2]);
+                $("#td-f6-" + j).text(weatherForecast.arrTr6[j - 2]);
+            }
+        }
+        if (probe == "two"){
+            for (let j = 2 + weatherForecast.countOfTd; j <= weatherForecast.countOfTd + 9; j++) {
+                $("#td-f1-" + (j-8)).text(weatherForecast.arrTr1[j - 2]); // вывод строки с часами до конца дня
+                $("#img_icon_wef" + (j-8)).attr("src", "http://openweathermap.org/img/wn/" + response.list[j-2].weather[0].icon + "@2x.png"); // вывод строки с картинками
+                $("#td-f3-" + (j-8)).text(response.list[j-2].weather[0].main);
+                $("#td-f4-" + (j-8)).text((response.list[j-2].main.temp).toFixed(1));
+                $("#td-f5-" + (j-8)).text((response.list[j-2].main.temp_max).toFixed(1));
+                $("#td-f6-" + (j-8)).text(Math.round(response.list[j-2].wind.speed) + getDirection(response.list[j-2].wind.deg));
+            }
+        }
+        if (probe == "three"){
+            for (let j = 10 + weatherForecast.countOfTd; j <= weatherForecast.countOfTd + 17; j++) {
+                $("#td-f1-" + (j-16)).text(weatherForecast.arrTr1[j - 2]); // вывод строки с часами до конца дня
+                $("#img_icon_wef" + (j-16)).attr("src", "http://openweathermap.org/img/wn/" + response.list[j-2].weather[0].icon + "@2x.png"); // вывод строки с картинками
+                $("#td-f3-" + (j-16)).text(response.list[j-2].weather[0].main);
+                $("#td-f4-" + (j-16)).text((response.list[j-2].main.temp).toFixed(1));
+                $("#td-f5-" + (j-16)).text((response.list[j-2].main.temp_max).toFixed(1));
+                $("#td-f6-" + (j-16)).text(Math.round(response.list[j-2].wind.speed) + getDirection(response.list[j-2].wind.deg));
+            }
+        }
+        if (probe == "four"){
+            for (let j = 18 + weatherForecast.countOfTd; j <= weatherForecast.countOfTd + 25; j++) {
+                $("#td-f1-" + (j-24)).text(weatherForecast.arrTr1[j - 2]); // вывод строки с часами до конца дня
+                $("#img_icon_wef" + (j-24)).attr("src", "http://openweathermap.org/img/wn/" + response.list[j-2].weather[0].icon + "@2x.png"); // вывод строки с картинками
+                $("#td-f3-" + (j-24)).text(response.list[j-2].weather[0].main);
+                $("#td-f4-" + (j-24)).text((response.list[j-2].main.temp).toFixed(1));
+                $("#td-f5-" + (j-24)).text((response.list[j-2].main.temp_max).toFixed(1));
+                $("#td-f6-" + (j-24)).text(Math.round(response.list[j-2].wind.speed) + getDirection(response.list[j-2].wind.deg));
+            }
+        }  
+        if (probe == "five"){
+            for (let j = 26 + weatherForecast.countOfTd; j <= weatherForecast.countOfTd + 33; j++) {
+                $("#td-f1-" + (j-32)).text(weatherForecast.arrTr1[j - 2]); // вывод строки с часами до конца дня
+                $("#img_icon_wef" + (j-32)).attr("src", "http://openweathermap.org/img/wn/" + response.list[j-2].weather[0].icon + "@2x.png"); // вывод строки с картинками
+                $("#td-f3-" + (j-32)).text(response.list[j-2].weather[0].main);
+                $("#td-f4-" + (j-32)).text((response.list[j-2].main.temp).toFixed(1));
+                $("#td-f5-" + (j-32)).text((response.list[j-2].main.temp_max).toFixed(1));
+                $("#td-f6-" + (j-32)).text(Math.round(response.list[j-2].wind.speed) + getDirection(response.list[j-2].wind.deg));
+            }
+        }      
     }
     function getForecastDay(index){
-        if (index == 1)
-        {
-            console.log("---Working1---");
-        }
-        else if (index == 2)
-        {
-            console.log("---Working2---");
-        }
-        else if (index == 3)
-        {
-            console.log("---Working3---");
-        }
-        else if (index == 4)
-        {
-            console.log("---Working4---");
-        }
-        else if (index == 5)
-        {
-            console.log("---Working5---");
-        }
+        let indNew = "" + index;
+        makeAPICall("http://api.openweathermap.org/data/2.5/forecast?&q=" + $("#mainHeadSearch").val() + "&units=Metric&lang=ru&appid=" + ACCESS_KEY, "forecast_new", indNew);
     }
+
     function letsBegin(){ // функция заполнения основных вкладок
         $("<div id='mainHead'>").appendTo("body"); // основной див для заголовка
         $("<div id='mainHeadDiv1'>").appendTo("#mainHead"); // Заголовок My Weather
@@ -551,19 +586,19 @@ $(function () {
         }
 
         var geoSuccess = function(position) {
-            makeAPICall("http://api.openweathermap.org/data/2.5/forecast?lat=" + position.coords.latitude + "&lon=" + position.coords.longitude + "&units=Metric&lang=ru&appid=" + ACCESS_KEY, "forecast");
-            makeAPICall("http://api.openweathermap.org/data/2.5/weather?lat=" + position.coords.latitude + "&lon=" + position.coords.longitude + "&units=Metric&lang=ru&appid=" + ACCESS_KEY, "current");
-            makeAPICall("http://api.openweathermap.org/data/2.5/find?lat=" + position.coords.latitude + "&lon=" + position.coords.longitude + "&units=Metric&cnt=5&appid=" + ACCESS_KEY, "nearby");
+            makeAPICall("http://api.openweathermap.org/data/2.5/forecast?lat=" + position.coords.latitude + "&lon=" + position.coords.longitude + "&units=Metric&lang=ru&appid=" + ACCESS_KEY, "forecast", "0");
+            makeAPICall("http://api.openweathermap.org/data/2.5/weather?lat=" + position.coords.latitude + "&lon=" + position.coords.longitude + "&units=Metric&lang=ru&appid=" + ACCESS_KEY, "current", "0");
+            makeAPICall("http://api.openweathermap.org/data/2.5/find?lat=" + position.coords.latitude + "&lon=" + position.coords.longitude + "&units=Metric&cnt=5&appid=" + ACCESS_KEY, "nearby", "0");
         };
         navigator.geolocation.getCurrentPosition(geoSuccess, geoFailure);
         function geoFailure(positionError){
-            makeAPICall("http://api.openweathermap.org/data/2.5/weather?&q=Vitebsk&units=Metric&lang=ru&appid=" + ACCESS_KEY, "current");
-            makeAPICall("http://api.openweathermap.org/data/2.5/forecast?&q=Vitebsk&units=Metric&lang=ru&appid=" + ACCESS_KEY, "forecast");
-            makeAPICall("http://api.openweathermap.org/data/2.5/find?lat=55.19&lon=30.21&units=Metric&cnt=5&appid=" + ACCESS_KEY, "nearby");
+            makeAPICall("http://api.openweathermap.org/data/2.5/weather?&q=Vitebsk&units=Metric&lang=ru&appid=" + ACCESS_KEY, "current", "0");
+            makeAPICall("http://api.openweathermap.org/data/2.5/forecast?&q=Vitebsk&units=Metric&lang=ru&appid=" + ACCESS_KEY, "forecast", "0");
+            makeAPICall("http://api.openweathermap.org/data/2.5/find?lat=55.19&lon=30.21&units=Metric&cnt=5&appid=" + ACCESS_KEY, "nearby", "0");
             $("#mainHeadSearch").val("Vitebsk");
         };
     }
-    function makeAPICall(url, typeOfWeather) {
+    function makeAPICall(url, typeOfWeather, index) {
         $.ajax({
             dataType: "json",
             url: url,
@@ -584,7 +619,24 @@ $(function () {
                 }
                 else if (typeOfWeather == "forecast_new")
                 {
-                    createAPI4(resp);
+                    if (index == "0"){
+                        createAPI4(resp, "zero");
+                    }
+                    if (index == "1"){
+                        createAPI4(resp, "one");
+                    }
+                    if (index == "2"){
+                        createAPI4(resp, "two");
+                    }
+                    if (index == "3"){
+                        createAPI4(resp, "three");
+                    }
+                    if (index == "4"){
+                        createAPI4(resp, "four");
+                    }
+                    if (index == "5"){
+                        createAPI4(resp, "five");
+                    }
                 }
             },
             error: function (err, status) 
