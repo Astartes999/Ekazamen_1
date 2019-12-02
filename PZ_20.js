@@ -145,15 +145,24 @@ $(function () {
             var arrImage = [];
             if (marker == "t"){
                 for (let i = 0; i <= kolvoTd(); i++) {
-                    arrImage[i] = "<img id='img_icon_we" + i + "' src='http://openweathermap.org/img/wn/" + response.list[i].weather[0].icon + "@2x.png' />";
+                    arrImage[i] = "http://openweathermap.org/img/wn/" + response.list[i].weather[0].icon + "@2x.png";
                 }
                 return arrImage;
+                
             }
             else if (marker == "f"){
                 for (let i = 0; i <= kolvoTd(); i++) {
-                    arrImage[i] = "<img id='img_icon_wef" + i + "' src='http://openweathermap.org/img/wn/" + response.list[i].weather[0].icon + "@2x.png' />";
+                    arrImage[i] = "http://openweathermap.org/img/wn/" + response.list[i].weather[0].icon + "@2x.png";
                 }
+                
                 return arrImage;
+            }
+            
+        }
+        function initImage(){
+            for (let i = 2; i <= 8; i++) {
+                $("<img id='img_icon_we" + i + "'>").appendTo("#td-2-" + i);
+                $("<img id='img_icon_wef" + i + "'>").appendTo("#td-f2-" + i);
             }
         }
         function arrOfMain() // функция создания массива подписей под картинками
@@ -208,7 +217,7 @@ $(function () {
         }
         for (let i = 1; i <= 6; i++) // цикл задания id всех остальных ячеек
         {
-            for (let j = 1; j <= weatherForecast.countOfTd + 1; j++) {
+            for (let j = 1; j <=8; j++) {
                 $("<td id='td-" + i + "-" + j + "'>").appendTo("#tr-" + i);
                 $("<td id='td-f" + i + "-" + j + "'>").appendTo("#tr-f" + i); // в прогноз для 5 дней
             }
@@ -225,20 +234,20 @@ $(function () {
         $("#td-f5-1").text("Max Temp");// в прогноз для 5 дней
         $("#td-6-1").text("Wind (kmp/h)");
         $("#td-f6-1").text("Wind (kmp/h)");// в прогноз для 5 дней
-
+        initImage();
         for (let j = 2; j <= weatherForecast.countOfTd + 1; j++) {
-            $("#td-1-" + j).text(weatherForecast.arrTr1[j - 2]).appendTo("#tr-1"); // вывод строки с часами до конца дня
-            $("#td-f1-" + j).text(weatherForecast.arrTr1[j - 2]).appendTo("#tr-f1"); // вывод строки с часами до конца дня в прогноз для 5 дней
-            $(weatherForecast.arrTr2[j - 2]).appendTo("#td-2-" + j); // вывод строки с картинками
-            $(weatherForecast.arrTr2f[j - 2]).appendTo("#td-f2-" + j); // вывод строки с картинками в прогноз для 5 дней
-            $("#td-3-" + j).text(weatherForecast.arrTr3[j - 2]).appendTo("#tr-3");
-            $("#td-f3-" + j).text(weatherForecast.arrTr3[j - 2]).appendTo("#tr-f3"); // в прогноз для 5 дней
-            $("#td-4-" + j).text(weatherForecast.arrTr4[j - 2]).appendTo("#tr-4");
-            $("#td-f4-" + j).text(weatherForecast.arrTr4[j - 2]).appendTo("#tr-f4"); // в прогноз для 5 дней
-            $("#td-5-" + j).text(weatherForecast.arrTr5[j - 2]).appendTo("#tr-5");
-            $("#td-f5-" + j).text(weatherForecast.arrTr5[j - 2]).appendTo("#tr-f5"); // в прогноз для 5 дней
-            $("#td-6-" + j).text(weatherForecast.arrTr6[j - 2]).appendTo("#tr-6");
-            $("#td-f6-" + j).text(weatherForecast.arrTr6[j - 2]).appendTo("#tr-f6"); // в прогноз для 5 дней
+            $("#td-1-" + j).text(weatherForecast.arrTr1[j - 2]); // вывод строки с часами до конца дня
+            $("#td-f1-" + j).text(weatherForecast.arrTr1[j - 2]); // вывод строки с часами до конца дня в прогноз для 5 дней
+            $("#img_icon_we" + j).attr("src", weatherForecast.arrTr2[j - 2]); // вывод строки с картинками
+            $("#img_icon_wef" + j).attr("src", weatherForecast.arrTr2f[j - 2]); // вывод строки с картинками
+            $("#td-3-" + j).text(weatherForecast.arrTr3[j - 2]);
+            $("#td-f3-" + j).text(weatherForecast.arrTr3[j - 2]); // в прогноз для 5 дней
+            $("#td-4-" + j).text(weatherForecast.arrTr4[j - 2]);
+            $("#td-f4-" + j).text(weatherForecast.arrTr4[j - 2]); // в прогноз для 5 дней
+            $("#td-5-" + j).text(weatherForecast.arrTr5[j - 2]);
+            $("#td-f5-" + j).text(weatherForecast.arrTr5[j - 2]); // в прогноз для 5 дней
+            $("#td-6-" + j).text(weatherForecast.arrTr6[j - 2]);
+            $("#td-f6-" + j).text(weatherForecast.arrTr6[j - 2]); // в прогноз для 5 дней
         }
         for (let i = 0; i < 40; i = i+8){
             let ind = i/8+1;
@@ -398,8 +407,8 @@ $(function () {
             for (let j = 2; j <= weatherForecast.countOfTd + 1; j++) {
                 $("#td-1-" + j).text(weatherForecast.arrTr1[j - 2]); // вывод строки с часами до конца дня
                 $("#td-f1-" + j).text(weatherForecast.arrTr1[j - 2]); // вывод строки с часами до конца дня
-                $("#img_icon_we" + (j-2)).attr("src", weatherForecast.arrTr2[j - 2]); // вывод строки с картинками
-                $("#img_icon_wef" + (j-2)).attr("src", weatherForecast.arrTr2[j - 2]); // вывод строки с картинками
+                $("#img_icon_we" + j).attr("src", weatherForecast.arrTr2[j - 2]); // вывод строки с картинками
+                $("#img_icon_wef" + j).attr("src", weatherForecast.arrTr2[j - 2]); // вывод строки с картинками
                 $("#td-3-" + j).text(weatherForecast.arrTr3[j - 2]);
                 $("#td-f3-" + j).text(weatherForecast.arrTr3[j - 2]);
                 $("#td-4-" + j).text(weatherForecast.arrTr4[j - 2]);
@@ -413,59 +422,75 @@ $(function () {
         if (probe == "one"){
             for (let j = 2; j <= weatherForecast.countOfTd + 1; j++) {
                 $("#td-f1-" + j).text(getDateAPI(new Date(response.list[j-2].dt * 1000), "hour")); // вывод строки с часами до конца дня
-                $("#img_icon_wef" + (j-2)).attr("src", weatherForecast.arrTr2[j - 2]); // вывод строки с картинками
+                $("#img_icon_wef" + j).attr("src", "http://openweathermap.org/img/wn/" + response.list[j-2].weather[0].icon + "@2x.png"); // вывод строки с картинками
                 $("#td-f3-" + j).text(weatherForecast.arrTr3[j - 2]);
                 $("#td-f4-" + j).text(weatherForecast.arrTr4[j - 2]);
                 $("#td-f5-" + j).text(weatherForecast.arrTr5[j - 2]);
                 $("#td-f6-" + j).text(weatherForecast.arrTr6[j - 2]);
             }
+            if (weatherForecast.countOfTd < 7){
+                for (let k = weatherForecast.countOfTd + 1; k <= 7; k++){
+                $("#td-f1-" + (k-weatherForecast.countOfTd+1)).text(" "); // вывод строки с часами до конца дня
+                $("#img_icon_wef" + (k-weatherForecast.countOfTd+1)).removeAttr("src"); // вывод строки с картинками
+                $("#td-f3-" + (k-weatherForecast.countOfTd+1)).text(" ");
+                $("#td-f4-" + (k-weatherForecast.countOfTd+1)).text(" ");
+                $("#td-f5-" + (k-weatherForecast.countOfTd+1)).text(" ");
+                $("#td-f6-" + (k-weatherForecast.countOfTd+1)).text(" ");
+                }
+            }
+            
         }
         if (probe == "two"){
             for (let j = 2 + weatherForecast.countOfTd; j <= weatherForecast.countOfTd + 9; j++) {
-                $("#td-f1-" + (j-8)).text(weatherForecast.arrTr1[j - 2]); // вывод строки с часами до конца дня
-                $("#img_icon_wef" + (j-8)).attr("src", "http://openweathermap.org/img/wn/" + response.list[j-2].weather[0].icon + "@2x.png"); // вывод строки с картинками
-                $("#td-f3-" + (j-8)).text(response.list[j-2].weather[0].main);
-                $("#td-f4-" + (j-8)).text((response.list[j-2].main.temp).toFixed(1));
-                $("#td-f5-" + (j-8)).text((response.list[j-2].main.temp_max).toFixed(1));
-                $("#td-f6-" + (j-8)).text(Math.round(response.list[j-2].wind.speed) + getDirection(response.list[j-2].wind.deg));
+                $("#td-f1-" + (j-8 + weatherForecast.countOfTd)).text(getDateAPI(new Date(response.list[j-2].dt * 1000), "hour")); // вывод строки с часами до конца дня
+                $("#img_icon_wef" + (j-8 + weatherForecast.countOfTd)).attr("src", "http://openweathermap.org/img/wn/" + response.list[j-2].weather[0].icon + "@2x.png"); // вывод строки с картинками
+                $("#td-f3-" + (j-8 + weatherForecast.countOfTd)).text(response.list[j-2].weather[0].main);
+                $("#td-f4-" + (j-8 + weatherForecast.countOfTd)).text((response.list[j-2].main.temp).toFixed(1));
+                $("#td-f5-" + (j-8 + weatherForecast.countOfTd)).text((response.list[j-2].main.temp_max).toFixed(1));
+                $("#td-f6-" + (j-8 + weatherForecast.countOfTd)).text(Math.round(response.list[j-2].wind.speed) + getDirection(response.list[j-2].wind.deg));
             }
         }
         if (probe == "three"){
             for (let j = 10 + weatherForecast.countOfTd; j <= weatherForecast.countOfTd + 17; j++) {
-                $("#td-f1-" + (j-16)).text(weatherForecast.arrTr1[j - 2]); // вывод строки с часами до конца дня
-                $("#img_icon_wef" + (j-16)).attr("src", "http://openweathermap.org/img/wn/" + response.list[j-2].weather[0].icon + "@2x.png"); // вывод строки с картинками
-                $("#td-f3-" + (j-16)).text(response.list[j-2].weather[0].main);
-                $("#td-f4-" + (j-16)).text((response.list[j-2].main.temp).toFixed(1));
-                $("#td-f5-" + (j-16)).text((response.list[j-2].main.temp_max).toFixed(1));
-                $("#td-f6-" + (j-16)).text(Math.round(response.list[j-2].wind.speed) + getDirection(response.list[j-2].wind.deg));
+                $("#td-f1-" + (j-16 + weatherForecast.countOfTd)).text(weatherForecast.arrTr1[j - 2]); // вывод строки с часами до конца дня
+                $("#img_icon_wef" + (j-16 + weatherForecast.countOfTd)).attr("src", "http://openweathermap.org/img/wn/" + response.list[j-2].weather[0].icon + "@2x.png"); // вывод строки с картинками
+                $("#td-f3-" + (j-16 + weatherForecast.countOfTd)).text(response.list[j-2].weather[0].main);
+                $("#td-f4-" + (j-16 + weatherForecast.countOfTd)).text((response.list[j-2].main.temp).toFixed(1));
+                $("#td-f5-" + (j-16 + weatherForecast.countOfTd)).text((response.list[j-2].main.temp_max).toFixed(1));
+                $("#td-f6-" + (j-16 + weatherForecast.countOfTd)).text(Math.round(response.list[j-2].wind.speed) + getDirection(response.list[j-2].wind.deg));
             }
         }
         if (probe == "four"){
             for (let j = 18 + weatherForecast.countOfTd; j <= weatherForecast.countOfTd + 25; j++) {
-                $("#td-f1-" + (j-24)).text(weatherForecast.arrTr1[j - 2]); // вывод строки с часами до конца дня
-                $("#img_icon_wef" + (j-24)).attr("src", "http://openweathermap.org/img/wn/" + response.list[j-2].weather[0].icon + "@2x.png"); // вывод строки с картинками
-                $("#td-f3-" + (j-24)).text(response.list[j-2].weather[0].main);
-                $("#td-f4-" + (j-24)).text((response.list[j-2].main.temp).toFixed(1));
-                $("#td-f5-" + (j-24)).text((response.list[j-2].main.temp_max).toFixed(1));
-                $("#td-f6-" + (j-24)).text(Math.round(response.list[j-2].wind.speed) + getDirection(response.list[j-2].wind.deg));
+                $("#td-f1-" + (j-24 + weatherForecast.countOfTd)).text(weatherForecast.arrTr1[j - 2]); // вывод строки с часами до конца дня
+                $("#img_icon_wef" + (j-24 + weatherForecast.countOfTd)).attr("src", "http://openweathermap.org/img/wn/" + response.list[j-2].weather[0].icon + "@2x.png"); // вывод строки с картинками
+                $("#td-f3-" + (j-24 + weatherForecast.countOfTd)).text(response.list[j-2].weather[0].main);
+                $("#td-f4-" + (j-24 + weatherForecast.countOfTd)).text((response.list[j-2].main.temp).toFixed(1));
+                $("#td-f5-" + (j-24 + weatherForecast.countOfTd)).text((response.list[j-2].main.temp_max).toFixed(1));
+                $("#td-f6-" + (j-24 + weatherForecast.countOfTd)).text(Math.round(response.list[j-2].wind.speed) + getDirection(response.list[j-2].wind.deg));
             }
         }  
         if (probe == "five"){
             for (let j = 26 + weatherForecast.countOfTd; j <= weatherForecast.countOfTd + 33; j++) {
-                $("#td-f1-" + (j-32)).text(weatherForecast.arrTr1[j - 2]); // вывод строки с часами до конца дня
-                $("#img_icon_wef" + (j-32)).attr("src", "http://openweathermap.org/img/wn/" + response.list[j-2].weather[0].icon + "@2x.png"); // вывод строки с картинками
-                $("#td-f3-" + (j-32)).text(response.list[j-2].weather[0].main);
-                $("#td-f4-" + (j-32)).text((response.list[j-2].main.temp).toFixed(1));
-                $("#td-f5-" + (j-32)).text((response.list[j-2].main.temp_max).toFixed(1));
-                $("#td-f6-" + (j-32)).text(Math.round(response.list[j-2].wind.speed) + getDirection(response.list[j-2].wind.deg));
+                $("#td-f1-" + (j-32 + weatherForecast.countOfTd)).text(weatherForecast.arrTr1[j - 2]); // вывод строки с часами до конца дня
+                $("#img_icon_wef" + (j-32 + weatherForecast.countOfTd)).attr("src", "http://openweathermap.org/img/wn/" + response.list[j-2].weather[0].icon + "@2x.png"); // вывод строки с картинками
+                $("#td-f3-" + (j-32 + weatherForecast.countOfTd)).text(response.list[j-2].weather[0].main);
+                $("#td-f4-" + (j-32 + weatherForecast.countOfTd)).text((response.list[j-2].main.temp).toFixed(1));
+                $("#td-f5-" + (j-32 + weatherForecast.countOfTd)).text((response.list[j-2].main.temp_max).toFixed(1));
+                $("#td-f6-" + (j-32 + weatherForecast.countOfTd)).text(Math.round(response.list[j-2].wind.speed) + getDirection(response.list[j-2].wind.deg));
             }
         }      
     }
     function getForecastDay(index){
         let indNew = "" + index;
         makeAPICall("http://api.openweathermap.org/data/2.5/forecast?&q=" + $("#mainHeadSearch").val() + "&units=Metric&lang=ru&appid=" + ACCESS_KEY, "forecast_new", indNew);
+        for (let i = 1; i<=5; i++){
+            $("#day_" + i).removeClass("podsv");
+            $("#day_" + i).addClass("nepodsv");
+        } 
+        $("#day_" + indNew).removeClass("nepodsv");
+        $("#day_" + indNew).addClass("podsv");
     }
-
     function letsBegin(){ // функция заполнения основных вкладок
         $("<div id='mainHead'>").appendTo("body"); // основной див для заголовка
         $("<div id='mainHeadDiv1'>").appendTo("#mainHead"); // Заголовок My Weather
@@ -568,6 +593,7 @@ $(function () {
             $("<div>",
             {
                 id: "day_" + i,
+                class: "nepodsv",
                 click: function(){getForecastDay(i)}
             }).appendTo("#fiveDay_forecast"); // формируем див для всего дня
             $("<div id='day_" + i +"_head'>").appendTo("#day_"+ i); // формируем див для заголовка

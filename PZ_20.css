@@ -25,6 +25,7 @@
 #mainHeadSearch
 {
     padding: 19px;
+
     font-size: 20px;
 }
 #vkladki
@@ -203,7 +204,6 @@ td
     align-items: center;
     justify-content: center;
     border-radius: 10px;
-    background-color: khaki;
     border: white solid 3px;
     height: 150px;
 }
@@ -219,5 +219,13 @@ td
 }
 #day_1:hover, #day_2:hover, #day_3:hover, #day_4:hover, #day_5:hover
 {
-    background-color: rgb(180, 176, 138);
+    background-color: rgb(180, 176, 137);
+}
+.nepodsv
+{
+    background-color: khaki;
+}
+.podsv
+{
+    background-color: #999;
 }
